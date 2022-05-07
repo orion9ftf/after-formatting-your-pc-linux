@@ -91,6 +91,8 @@ Enter
 
 `$ ls`
 
+`cat`: Nos ayuda a ver el contenido de los archivos
+
 `$ cat id_rsa.pub `
 
 
@@ -170,33 +172,89 @@ Con esto ya tenemos configurada la base de datos con la cual trabajaremos pero d
 
 Antes que todo; necesitaremos un gestor de versiones, esto es para ordenarnos en las versiones que trabajaremos con Ruby, podemos tener cuantas versiones queramos pero, se recomienda trabajar con versiones estables, ya que existe mucha documentación formal al respecto.
 
-Primero instalaremos rvm, gestor de dependencias:
+***Para que nos interprete rails a pg (postgresql), necesitamos decirle con qué dependencias lo hará:***
 
-`$ sudo apt-get install -y git-core subversion`
+```shell
+sudo apt-get install libpq-dev
+```
+
+* Primero instalaremos rvm, gestor de dependencias:
+
+1.- `$ sudo apt-get install -y git-core subversion`
+
+1.1.- `$ sudo apt update`
+
+2.- `$ sudo apt install gnupg2`
+
+2.1.- Agregar llave para rvn:
+
+```shell
+$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+```
+
+***si no te funciona la primera, prueba con esta:***
+
+```shell
+gpg2 --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+```
+
+o:
+
+```shell
+gpg –keyserver hkp://pool.sks-keyservers.net –recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+```
 
 
-`$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB`
+3.- Esta comando nos trae las versiones estables de ruby y rails:
 
-`$ \curl -sSL https://get.rvm.io | bash -s stable --rails --ruby`
+```shell
+$ \curl -sSL https://get.rvm.io | bash -s stable --rails --ruby
+```
 
-`$ type rvm | head -n 1`
+3.1.- Si no funciona el anterior, prueba con este:
+
+```shell
+\curl -sSL https://get.rvm.io -o rvm.sh
+```
+
+3.2.- Luego este:
+
+```shell
+$ type rvm | head -n 1
+```
+
+4.- Agregamos los permiso al USER:
+
+```shell
+rvm group add rvm "$USER"
+```
+
+```shell
+rvm fix-permissions
+```
+
+```shell
+sudo chown -R $USER:rvm /usr/share/rvm/.
+```
 
 
 *****************************************************************************************************************************
 ### Instalar Rails:
 
 
-
 Es aquí donde podemos instalar la versión que más nos guste trabajar, por lo general recomiendo instalar la versión que más te acomode.
 
-`$ rvm install -v 2.5.3`
-
+```shell
+$ rvm install -v x.x.x
+```
 
 Para Rails, recomiendo instalar la versión que más te guste (rails 7) y si quieres probar varias versiones, puedes pasarle el comando $ gem install rails [la_version_que_gustes].
 
-`$ gem install rails -v 5.2.5`
+```shell
+$ gem install rails -v x.x.x
+```
 
-Crear gemset:
+***Crear gemset:***
 
 ¿Para qué es importante instalar rvm?
 
@@ -204,7 +262,7 @@ rvm será nuestro gestor de versiones de Ruby y Rails, en las cuales podemos cre
 
 ¿Cómo crear un gemset:
 
-`$ rvm gemset create rails525`
+`$ rvm gemset create railsName`
 
 ***NOTA: Lo ideal es darle un nombre que haga referencia a la versión de Rails la cual voy a utilizar.***
 
